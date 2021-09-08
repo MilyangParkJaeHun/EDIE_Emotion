@@ -1,0 +1,179 @@
+{
+  "BLINK": {
+    "base_contents": {
+      "a": "0",
+      "b": "1~7"
+    },
+    "sequence": {
+      "0": {
+        "contents": "a",
+        "count": 1
+      },
+      "1": {
+        "contents": "bRb",
+        "count": 1
+      },
+      "2": {
+        "contents": "a",
+        "count": 36
+      }
+    }
+  },
+  "LAUGH": {
+    "base_contents": {
+      "a": "0~6",
+      "b": "7~9",
+      "c": "0"
+    },
+    "sequence": {
+      "0": {
+        "contents": "a",
+        "count": 1
+      },
+      "1": {
+        "contents": "bRb",
+        "count": 6
+      },
+      "2": {
+        "contents": "Ra",
+        "count": 1
+      },
+      "3": {
+        "contents": "c",
+        "count": 47
+      }
+    }
+  },
+  "FLINCH": {
+    "base_contents": {
+      "a": "0",
+      "b": "1~3",
+      "c": "4~6"
+    },
+    "sequence": {
+      "0": {
+        "contents": "a",
+        "count": 1
+      },
+      "1": {
+        "contents": "b",
+        "count": 1
+      },
+      "2": {
+        "contents": "cRc",
+        "count": 3
+      },
+      "3": {
+        "contents": "Ra",
+        "count": 1
+      },
+      "4": {
+        "contents": "a",
+        "count": 29
+      }
+    }
+  },
+  "SURPRISE": {
+    "base_contents": {
+      "a": "0",
+      "b": "1~7",
+      "c": "8~25"
+    },   
+    "sequence": {
+      "0": {
+        "contents": "a",
+        "count": 1
+      },
+      "1": {
+        "contents": "b",
+        "count": 1
+      },
+      "2": {
+        "contents": "cRc",
+        "count": 1
+      },
+      "3": {
+        "contents": "Rb",
+        "count": 1 
+      },
+      "4": {
+        "contents": "a",
+        "count": 30
+      }
+    }   
+  },
+  "LOOK_AROUND": {
+    "base_contents": {
+      "a": "0",
+      "b": "1~5",
+      "c": "6~10",
+      "d": "11~16"
+    },   
+    "sequence": {
+      "0": {
+        "contents": "a",
+        "count": 1
+      },
+      "1": {
+        "contents": "bRb",
+        "count": 1
+      },
+      "2": {
+        "contents": "a",
+        "count": 1
+      },
+      "3": {
+        "contents": "cRc",
+        "count": 1 
+      },
+      "4": {
+        "contents": "a",
+        "count": 1
+      },
+      "5": {
+        "contents": "dRd",
+        "count": 1
+      },
+      "6": {
+        "contents": "a",
+        "count": 27
+      }
+    }
+  },
+  "LOVE": {
+    "base_contents": {
+      "a": "0",
+      "b": "1~5"
+    },   
+    "sequence": {
+      "0": {
+        "contents": "a",
+        "count": 1
+      },
+      "1": {
+        "contents": "bRb",
+        "count": 4
+      },
+      "2": {
+        "contents": "a",
+        "count": 30
+      }
+    }
+  },
+  "BATTERYLOW": {
+    "base_contents": {
+      "a": "0",
+      "b": "1"
+    },   
+    "sequence": {
+      "0": {
+        "contents": "a",
+        "count": 10
+      },
+      "1": {
+        "contents": "b",
+        "count": 10
+      }
+    }
+  }
+}
