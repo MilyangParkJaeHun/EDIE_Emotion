@@ -1,8 +1,8 @@
 /*
  * Parser.hpp
  *
- *  Author: jh9277
- *  Refactoring: jh9277 , 2020.06.29
+ *  Author: Park Jaehun
+ *  Refactoring: Park Jaehun , 2021.09.15
  */
 
 #ifndef PARSER_HPP
@@ -27,23 +27,70 @@ class Parser
     std::string json_file_path_;
 
   public:
-    // Constructor
+    /**
+     * @brief Construct a new Parser object
+     * 
+     */
     Parser();
-    // Desturctor
+    /**
+     * @brief Destroy the Parser object
+     * 
+     */
     ~Parser();
 
-    std::vector<std::string> StrSplit(const std::string& s, char delimiter);
-    int String2Int(std::string str);
+    /**
+     * @brief Get image sequences according to emotion name
+     * 
+     * @param emotion_name 
+     * @return std::vector<int> is image sequences
+     * ex) [0, 1, 2, 3, 2, 3, 2, 1, 0]
+     */
+    std::vector<int> getSequence(std::string emotion_name);
 
-    std::vector<int> MakeSequence(std::map<std::string, std::vector<int> > base_contents_map, Json::Value sequence);
+    /**
+     * @brief Make image sequences using base contents and sequence of base contents
+     * 
+     * @param base_contents_map is base contents
+     * @param sequence is seqeunce of base contents
+     * @return std::vector<int>
+     */
+    std::vector<int> makeSequence(std::map<std::string, std::vector<int> > base_contents_map, Json::Value sequence);
+     
+    /**
+     * @brief Get base contents from json data
+     * json data format : {"a": "0", "b": "1~7"}
+     * base contents  : {"a": [0], "b": [1, 2, 3, 4, 5, 6, 7]}
+     * 
+     * @param json_data is json format data
+     * @return std::map<std::string, std::vector<int> >
+     */
+    std::map<std::string, std::vector<int> > parseBaseContents(Json::Value json_data);
 
-    std::vector<int> ParsingContents(std::string contents_str);
+    /**
+     * @brief Parse the contents line
+     * 
+     * @param contents_str is contents line
+     * ex) "1~7"
+     * @return std::vector<int> 
+     */
+    std::vector<int> parseContentsLine(std::string contents_str);
 
-    std::map<std::string, std::vector<int> > Json2Map(Json::Value base_contents);
+    /**
+     * @brief Split strings through delimiters
+     * 
+     * @param s is string to split
+     * @param delimiter 
+     * @return std::vector<std::string>
+     */
+    std::vector<std::string> strSplit(const std::string& s, char delimiter);
 
-    void ReadJson(Json::Value &json_contents);
+    /**
+     * @brief Read json file containing sequence information and save it in json_contents.
+     * 
+     * @param json_contents is map format
+     */
+    void readJson(Json::Value &json_contents);
 
-    std::vector<int> GetSequence(std::string emotion_name);
 };
 
 #endif

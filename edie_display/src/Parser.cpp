@@ -1,8 +1,8 @@
 /*
  * Parser.cpp
  *
- *  Author: jh9277
- *  Refactoring: jh9277 , 2020.06.29
+ *  Author: Park Jaehun
+ *  Refactoring: Park Jaehun , 2021.09.15
  */
 
 #include "edie_display/Parser.hpp"
@@ -15,27 +15,7 @@ Parser::Parser()
 
 Parser::~Parser(){}
 
-// Split strings through delimiters
-std::vector<std::string> Parser::StrSplit(const std::string& s, char delimiter)
-{
-   std::vector<std::string> tokens;
-   std::string token;
-   std::istringstream tokenStream(s);
-   while (std::getline(tokenStream, token, delimiter))
-   {   
-      tokens.push_back(token);
-   }   
-   return tokens;
-}
-
-// Convert string to int
-int Parser::String2Int(std::string str)
-{
-  return std::stoi(str);
-}
-
-// Make emotion sequence with base contents
-std::vector<int> Parser::MakeSequence(std::map<std::string, std::vector<int> > base_contents_map, Json::Value sequence)
+std::vector<int> Parser::makeSequence(std::map<std::string, std::vector<int> > base_contents_map, Json::Value sequence)
 {
   std::vector<int> emotion_sequence;
 
@@ -47,22 +27,22 @@ std::vector<int> Parser::MakeSequence(std::map<std::string, std::vector<int> > b
     std::string id = sequence_id[i];
     std::string contents = sequence[id]["contents"].asString();
     int count = sequence[id]["count"].asInt();
+    // Set how many repeat one image
     int repeat = 1;
     if(sequence[id].isMember("repeat"))
     {
       repeat = sequence[id]["repeat"].asInt();
     }
 
-    // Repeat the same content count times
+    // Repeat the same sequence count times
     for(int j = 0; j < count; j++)
     {
       bool reverse = false;
-      // Read contents
       for(int k = 0; k < contents.size(); k++)
       {
         std::string now_contents_id = "";
         now_contents_id += contents.at(k);
-        // If not reverse flag
+        // Check is reversed sequence
         if(now_contents_id != "R")
         {
           std::vector<int> base_contents = base_contents_map[now_contents_id];
@@ -99,28 +79,27 @@ std::vector<int> Parser::MakeSequence(std::map<std::string, std::vector<int> > b
   return emotion_sequence;
 }
 
-// Parsing from contents string
-std::vector<int> Parser::ParsingContents(std::string contents_str)
+std::vector<int> Parser::parseContentsLine(std::string contents_line)
 {
   std::vector<int> contents;
 
   std::vector<std::string> comma_split_contents, wave_split_contents;
 
   // Split strings through ','
-  comma_split_contents = StrSplit(contents_str, ',');
+  comma_split_contents = strSplit(contents_line, ',');
 
   for(int i = 0; i < comma_split_contents.size(); i++)
   {
     std::string now = comma_split_contents[i];
 
     // Split strings through '~'
-    wave_split_contents = StrSplit(now, '~');
+    wave_split_contents = strSplit(now, '~');
 
     // if contents including '~'
     if(wave_split_contents.size() >= 2)
     {
-      int start = String2Int(wave_split_contents[0]);
-      int end = String2Int(wave_split_contents[1]);
+      int start = std::stoi(wave_split_contents[0]);
+      int end = std::stoi(wave_split_contents[1]);
 
       for(int j = start; j <= end; j++)
       {
@@ -129,7 +108,7 @@ std::vector<int> Parser::ParsingContents(std::string contents_str)
     }
     else
     {
-      int num = String2Int(wave_split_contents[0]);
+      int num = std::stoi(wave_split_contents[0]);
       contents.push_back(num);
     }
   }
@@ -137,50 +116,58 @@ std::vector<int> Parser::ParsingContents(std::string contents_str)
   return contents;
 }
 
-// Convert Json format to Map structure
-std::map<std::string, std::vector<int> > Parser::Json2Map(Json::Value base_contents)
+std::map<std::string, std::vector<int> > Parser::parseBaseContents(Json::Value json_data)
 {
-  std::map<std::string, std::vector<int> > base_contents_map;
-  std::vector<int> contents;
-  std::vector<std::string> contents_id = base_contents.getMemberNames();
+  std::map<std::string, std::vector<int> > base_contents;
+  std::vector<std::string> id_list = json_data.getMemberNames();
 
-  for(int i = 0; i < base_contents.size(); i++)
-  {
-    std::string id = contents_id[i];
+  for(int i = 0; i < json_data.size(); i++) {
+    std::string id = id_list[i];
 
-    contents = ParsingContents(base_contents[id].asString());
-    base_contents_map.insert(std::make_pair(id, contents));
+    // parse line by line
+    std::vector<int> contents = parseContentsLine(json_data[id].asString());
+
+    base_contents.insert(std::make_pair(id, contents));
   }
 
-  return base_contents_map;
+  return base_contents;
 }
 
-// Read Json file
-void Parser::ReadJson(Json::Value &json_contents)
+std::vector<int> Parser::getSequence(std::string emotion_name)
+{
+  Json::Value json_contents, base_contents, sequence;
+  std::map<std::string, std::vector<int> > base_contents_map;
+
+  // read sequence info from json file.
+  readJson(json_contents);
+
+  base_contents = json_contents[emotion_name]["base_contents"];
+  sequence = json_contents[emotion_name]["sequence"];
+
+  base_contents_map = parseBaseContents(base_contents);
+
+  return makeSequence(base_contents_map, sequence);
+}
+
+
+//
+std::vector<std::string> Parser::strSplit(const std::string& s, char delimiter)
+{
+   std::vector<std::string> tokens;
+   std::string token;
+   std::istringstream tokenStream(s);
+   while (std::getline(tokenStream, token, delimiter))
+   {   
+      tokens.push_back(token);
+   }   
+   return tokens;
+}
+
+void Parser::readJson(Json::Value &json_contents)
 {
   std::ifstream ifs(json_file_path_);
   Json::Reader reader;
   reader.parse(ifs, json_contents);
 
   return;
-}
-
-// Get emotion sequence according to emotion name
-std::vector<int> Parser::GetSequence(std::string emotion_name)
-{
-  std::vector<int> emotion_sequence;
-
-  Json::Value json_contents, base_contents, sequence;
-  std::map<std::string, std::vector<int> > base_contents_map;
-
-  ReadJson(json_contents);
-
-  base_contents = json_contents[emotion_name]["base_contents"];
-  sequence = json_contents[emotion_name]["sequence"];
-
-  base_contents_map = Json2Map(base_contents);
-
-  emotion_sequence = MakeSequence(base_contents_map, sequence);
-
-  return emotion_sequence;
 }

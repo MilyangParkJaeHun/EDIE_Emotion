@@ -1,13 +1,12 @@
 /*
  * Emotions.cpp
  *
- *  Author: jh9277
- *  Refactoring: jh9277 , 2020.06.25
+ *  Author: Park Jaehun
+ *  Refactoring: Park Jaehun , 2021.09.15
  */
 
 #ifndef EMOTIONS_HPP
 #define EMOTIONS_HPP
-#include <edie_struct.h>
 #include "edie_display/Emotion.hpp"
 #include <cstdio>
 #include <vector>
@@ -16,24 +15,63 @@
 class Emotions
 {
   private:
-    // Emotion array
-    std::vector<Emotion> contents_;
-    // Now emotion id
+    // list containing emotion instances
+    std::vector<Emotion> emotion_list_;
+    // current emotion id
     int now_id_;
-    // Total emotion count
+    // total number of emotions
     int total_emotion_count_;
+
   public:
-    //Constructor
+    /**
+     * @brief Construct a new Emotions object.
+     * 
+     */
     Emotions();
-    //Destructor
+
+    /**
+     * @brief Destroy the Emotions object.
+     * 
+     */
     ~Emotions();
 
-    bool Change(int id);
-    void Play();
-    bool Done();
-    std::string GetFileName();
-    std::string TestGet(int id);
-    cv::Mat GetImage();
+    /**
+     * @brief Change currnet emotion.
+     * 
+     * @param id Unique id that represents an emotion.
+     * @return true if successfully change emotion id.
+     */
+    bool change(int id);
+
+    /**
+     * @brief Update current frame index.
+     * 
+     */
+    void update();
+
+    /**
+     * @brief Check emotion play done.
+     * 
+     * @return true if the current emotion has ended.
+     */
+    bool isDone();
+
+    /**
+     * @brief Get the File Name object of current emotion.
+     * 
+     * @return std::string
+     */
+    std::string getFileName();
+
+    /**
+     * @brief Get the Image object of current emotion.
+     * 
+     * @return cv::Mat 
+     */
+    cv::Mat getImage();
+
+    // Get current emotion name
+    std::string testGet(int id);
 };
 
 #endif

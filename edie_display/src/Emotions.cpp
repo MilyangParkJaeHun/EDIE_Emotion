@@ -1,32 +1,29 @@
 /*
  * Emotions.cpp
  *
- *  Author: jh9277
- *  Refactoring: jh9277 , 2020.06.25
+ *  Author: Park Jaehun
+ *  Refactoring: Park Jaehun , 2021.09.15
  */
 
 #include "edie_display/Emotions.hpp"
-
 
 Emotions::Emotions()
 {
   // Initialize id
   now_id_ = 0;
-  // Get total emotion count
+  // Get total number of emotions
   total_emotion_count_ = static_cast<int>(EmotionState::COUNT);
-  // Set emotion array
+  
+  // Create instances for all emotions.
   for(int i=0; i<total_emotion_count_; i++)
   {
-    Emotion now_emotion = Emotion();
-    now_emotion.Set(i);
-    contents_.push_back(now_emotion);
+    emotion_list_.emplace_back(i);
   }
 }
 
 Emotions::~Emotions(){}
 
-// Change now emotion id
-bool Emotions::Change(int id)
+bool Emotions::change(int id)
 {
   // Check if topic is in range
   bool topic_error = false;
@@ -40,49 +37,44 @@ bool Emotions::Change(int id)
     now_id_ = id;
   }
 
-  Emotion& now_emotion = contents_[now_id_];
-  now_emotion.Start();
+  Emotion& now_emotion = emotion_list_[now_id_];
+  now_emotion.start();
 
   return topic_error;
 }
 
-// Emotion play
-void Emotions::Play()
+void Emotions::update()
 {
-  Emotion& now_emotion = contents_[now_id_];
-  now_emotion.AddIdx();
+  Emotion& now_emotion = emotion_list_[now_id_];
+  now_emotion.addIdx();
 
   return;
 }
 
-// Check emotion play done
-bool Emotions::Done()
+bool Emotions::isDone()
 {
-  Emotion& now_emotion = contents_[now_id_];
+  Emotion& now_emotion = emotion_list_[now_id_];
 
-  return now_emotion.CheckPlayDone();
+  return now_emotion.isPlayDone();
 }
 
-// Get current playing file name
-std::string Emotions::GetFileName()
+std::string Emotions::getFileName()
 {
-  Emotion& now_emotion = contents_[now_id_];
-  std::string file_name = now_emotion.GetImgFileName();
+  Emotion& now_emotion = emotion_list_[now_id_];
+  std::string file_name = now_emotion.getImgFileName();
 
   return file_name;
 }
 
-// Get current image
-cv::Mat Emotions::GetImage()
+cv::Mat Emotions::getImage()
 {
-  return contents_[now_id_].GetImage();
+  return emotion_list_[now_id_].getImage();
 }
 
-// Get current emotion name
-std::string Emotions::TestGet(int id)
+std::string Emotions::testGet(int id)
 {
-  Emotion emotion = contents_[id];
-  int size = emotion.GetSize();
-  std::string name = emotion.GetName();
+  Emotion emotion = emotion_list_[id];
+  int size = emotion.getSize();
+  std::string name = emotion.getName();
   return name;
 }
