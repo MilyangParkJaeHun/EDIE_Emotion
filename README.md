@@ -39,7 +39,7 @@ $ rosrun edie_display edie_display_node
 $ cd EDIE_Emotion/edie_display/image/Emotions
 $ mkdir NEW_EMOTION
 ```
-### 2. Add image
+### 2. Add image to image folder
 - name format : "emotions_${id}.png"
 - ex) emotions_0.png
 
