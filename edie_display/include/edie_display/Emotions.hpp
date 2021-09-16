@@ -38,7 +38,7 @@ class Emotions
     /**
      * @brief Change currnet emotion.
      * 
-     * @param id Unique id that represents an emotion.
+     * @param id is Unique id that represents an emotion.
      * @return true if successfully change emotion id.
      */
     bool change(int id);
