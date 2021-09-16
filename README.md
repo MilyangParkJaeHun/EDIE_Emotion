@@ -9,7 +9,7 @@ ROS package for robot emotional expression.
 <p align="center">
 <img src=https://user-images.githubusercontent.com/22341340/133569342-779bbd5f-b7e7-4f4e-bd88-eaa9b31bb334.gif width="200" height="100"> <img src=https://user-images.githubusercontent.com/22341340/133569404-62f11904-bd23-40f3-a425-2fea6c475989.gif  width="200" height="100"></p>
 
-By ParkJaeHun
+By Park JaeHun
 ## Environments
 - Ubuntu 18.04
 - ROS melodic
