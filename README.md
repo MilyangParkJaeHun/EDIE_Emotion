@@ -34,6 +34,11 @@ $ rosrun edie_emotion_handler edie_emotion_node
 $ rosrun edie_display edie_display_node
 ```
 
+## Test
+```
+$ rostopic pub /edie/emotion std_msgs/Int8 "data: 1"
+```
+
 ## How to add new emotion expression
 ### 1. Create image folder
 ```
