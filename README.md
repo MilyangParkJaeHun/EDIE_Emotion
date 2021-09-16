@@ -17,6 +17,7 @@ By ParkJaeHun
 
 ## Requirements
 - jsoncpp
+- OpenCV
 
 ## Build
 ```
