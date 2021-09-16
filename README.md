@@ -130,4 +130,6 @@ $ vi EDIE_Emotion/edie_display/config/emotion_sequence.json
   + COUNT = 7
   };
   ```
-
+  
+## Image COPYRIGHT
+Aei ROBOT : http://arobot4all.com/
