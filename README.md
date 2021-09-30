@@ -1,5 +1,8 @@
 # EDIE_Emotion
 ROS package for robot emotional expression.
+
+EDIE is **E**motional **D**esign and **I**nteractive **E**ntertainment robot.
+
 <p align="center">
 <img src=https://user-images.githubusercontent.com/22341340/133569386-c0d83cad-8cb0-4892-a24c-1ce37ea52cc2.gif width="200" height="100"> <img src=https://user-images.githubusercontent.com/22341340/133569452-59d3c052-06aa-4f5a-b4ad-08cd84b577e3.gif width="200" height="100"></p>
 
