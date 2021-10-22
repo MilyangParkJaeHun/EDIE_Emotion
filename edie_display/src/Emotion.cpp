@@ -30,7 +30,7 @@ Emotion::Emotion(int emotionId)
   sequence_size_ = 0;
   now_idx_ = 0;
   format_ = ".png";
-  emotion_ = EmotionState::BLINK;
+  emotion_ = static_cast<EmotionState>(0);
 
   sequence_.clear();
 
