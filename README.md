@@ -20,6 +20,9 @@ By Park JaeHun
 
 ## Requirements
 - jsoncpp
+  ```
+  $ sudo apt-get install libjsoncpp-dev
+  ```
 - OpenCV
 
 ## Build
